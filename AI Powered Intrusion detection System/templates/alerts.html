@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IDS Alerts</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Intrusion Detection Alerts</h1>
+        <div class="actions">
+            <a href="/" class="btn">Back to Dashboard</a>
+            <button id="clear-btn" class="btn btn-clear">Clear Alerts</button>
+        </div>
+        
+        <div class="alerts-container">
+            {% if alerts %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Source IP</th>
+                        <th>Destination IP</th>
+                        <th>Source Port</th>
+                        <th>Destination Port</th>
+                        <th>Protocol</th>
+                        <th>Confidence</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for alert in alerts %}
+                    <tr>
+                        <td>{{ alert.timestamp }}</td>
+                        <td>{{ alert.src_ip }}</td>
+                        <td>{{ alert.dst_ip }}</td>
+                        <td>{{ alert.src_port }}</td>
+                        <td>{{ alert.dst_port }}</td>
+                        <td>{{ alert.protocol }}</td>
+                        <td>{{ alert.confidence }}</td>
+                        <td>{{ alert.type }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="no-alerts">No alerts detected</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('clear-btn').addEventListener('click', () => {
+            fetch('/clear-alerts', { method: 'POST' })
+                .then(() => window.location.reload());
+        });
+    </script>
+</body>
+</html>

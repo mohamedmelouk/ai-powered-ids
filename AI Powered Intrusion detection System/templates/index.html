@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI-Powered IDS</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>AI-Powered Intrusion Detection System</h1>
+        <div class="stats">
+            <div class="stat-box">
+                <h3>System Status</h3>
+                <p>Running</p>
+            </div>
+            <div class="stat-box">
+                <h3>Alerts</h3>
+                <p id="alert-count">0</p>
+            </div>
+        </div>
+        
+        <div class="images">
+            <div class="image-container">
+                <h3>Confusion Matrix</h3>
+                <img src="/static/confusion_matrix.png" alt="Confusion Matrix">
+            </div>
+            <div class="image-container">
+                <h3>Feature Importance</h3>
+                <img src="/static/feature_importance.png" alt="Feature Importance">
+            </div>
+        </div>
+        
+        <a href="/alerts" class="btn">View Alerts</a>
+    </div>
+    
+    <script>
+        // Update alert count periodically
+        function updateAlertCount() {
+            fetch('/api/alerts')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('alert-count').textContent = data.length;
+                });
+        }
+        
+        setInterval(updateAlertCount, 5000);
+        updateAlertCount();
+    </script>
+</body>
+</html>
